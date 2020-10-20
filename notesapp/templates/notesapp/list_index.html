@@ -1,0 +1,111 @@
+{% extends 'notesapp/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+        <div>
+            <span>Photo by <a href="https://unsplash.com/@freegraphictoday?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">AbsolutVision</a> on <a href="https://unsplash.com/s/photos/notes?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+            <button type="button" class="btn btn-primary my-fixed-button" data-toggle="modal" data-target="#NotesModal"><img src="{% static 'bootstrap/icons/plus.svg' %}" width="20" height="20">New Note</button>
+        </div>
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <div class="alert alert-success text-center alert-dismissible fade show" role="alert">
+                        <strong>{{ message|safe }}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+
+        <div class="modal fade" id="NotesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel">New Note</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post">
+                            <div class="form-group">
+                                {{ note_form.title }}
+                            </div>
+                            <div class="form-group">
+                                <select name="category_select" id="category" class="form-control">
+                                    <option class="disabled" value="">Choose a category</option>
+                                    {% for category in categories %}
+                                        <option class="" value="{{ category.category }}" name="{{category.category}}">{{category.category}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="create-category" placeholder="Create new category.">
+                            </div>
+                            <div class="form-group">
+                                {{ note_form.text }}
+                            </div>
+                            
+                            {% csrf_token %}
+                            <input class="btn btn-success" type="Submit" name="" id="" value="Save">
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-4">
+            <div class="mt-2 mb-2 ml-3">
+                <form class="form-inline" method="post">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="search" placeholder="Search">
+                    </div>
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary ml-1" name="searchbtn"><img src="{% static 'bootstrap/icons/search.svg' %}" width="20" height="20"> Search</button>
+                </form>
+            </div>
+            <div class="container" style="height: 500px; overflow-y: scroll;">
+                {% if notes %}
+                    <div class="list-group">
+                    {% for note in notes %}
+                        <a href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#note{{note.id}}">{{ note.title }} - {{ note.category }} </a>
+ 
+                        <div class="modal fade" id="note{{note.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">{{ note.title }}</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>{{note.text}}</p>
+                                    <p>Category <img src="{% static 'bootstrap/icons/box-seam.svg' %}" width="16" height="16">: <span class="text-primary">{{note.category}}</span></p>
+                                    <p>Created <img src="{% static 'bootstrap/icons/calendar.svg' %}" width="16" height="16">: <span class="text-secondary">{{note.created}}</span></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'notesapp:update' note.id %}" class="btn btn-secondary"><img src="{% static 'bootstrap/icons/pen.svg' %}" width="16" height="16"> Edit</a>
+                                    <a href="{% url 'notesapp:delete' note.id %}" class="btn btn-danger"><img src="{% static 'bootstrap/icons/trash.svg' %}" width="16" height="16"> Delete</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                    {% endfor %}
+                        </div>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+
+
+{% endblock content %}

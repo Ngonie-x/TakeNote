@@ -1,0 +1,27 @@
+body, html{
+    height: 100%;
+}
+
+.bg{
+    /* <span>Photo by <a href="https://unsplash.com/@dtravisphd?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">David Travis</a> on <a href="https://unsplash.com/s/photos/notes?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span> */
+    background-image: url("../img/david-travis-5bYxXawHOQg-unsplash.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.home{
+    /* <span>Photo by <a href="https://unsplash.com/@freegraphictoday?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">AbsolutVision</a> on <a href="https://unsplash.com/s/photos/notes?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span> */
+    background-image: url("../img/absolutvision-82TpEld0_e4-unsplash.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.my-fixed-button {
+    position: absolute;
+    right: 15px;
+    /* bottom: 15px; */
+  }
